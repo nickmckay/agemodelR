@@ -1,4 +1,5 @@
-library(geoChronR)
+library(agemodelR)
+library(ens)
 
 test_that("simulateBam perturbs ages and returns expected structure", {
   set.seed(8)

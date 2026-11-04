@@ -72,7 +72,7 @@ calculateFlux <- function(L,
                    make.new = TRUE,
                    ens.units = ens.units,
                    ens.var = ens.var.name,
-                   methods = list(methods = "geoChronR::calculateFlux"))
+                   methods = list(methods = "agemodelR::calculateFlux"))
   
   return(L)
 }

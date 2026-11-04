@@ -1,6 +1,6 @@
 .onAttach <- function(...){
   if(!interactive()){
-    packageStartupMessage(glue::glue("Welcome to geoChronR version {utils::packageVersion('geoChronR')}!"))
+    packageStartupMessage(glue::glue("Welcome to agemodelR version {utils::packageVersion('agemodelR')}!"))
     
   }
 }

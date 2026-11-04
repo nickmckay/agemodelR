@@ -1,5 +1,5 @@
 #create an environment for package variables
-geoChronREnv <- new.env()
+agemodelREnv <- new.env()
 
 #' @export
 #' @author Nick McKay
@@ -13,11 +13,11 @@ geoChronREnv <- new.env()
 getBaconDir <- function(bacon.dir = NA,overwrite.tmp.dir = TRUE){
   #initialize bacon directory
   if(is.na(bacon.dir) | !is.character(bacon.dir)){
-    #check geoChronR env first
-    if(!exists("bacon.dir",where = geoChronREnv)){
+    #check agemodelR env first
+    if(!exists("bacon.dir",where = agemodelREnv)){
       bacon.dir <- file.path(tempdir(),"bacon")
     }else{
-      bacon.dir=get("bacon.dir",envir = geoChronREnv)
+      bacon.dir=get("bacon.dir",envir = agemodelREnv)
       if(is.na(bacon.dir) | !is.character(bacon.dir)){
         bacon.dir <- tempdir()
       }
@@ -44,7 +44,7 @@ getBaconDir <- function(bacon.dir = NA,overwrite.tmp.dir = TRUE){
 #' @family Bacon
 #' @return bacon.dir the bacon core directory
 setBaconDir <- function(bacon.dir){
-      assign("bacon.dir",value = bacon.dir,envir = geoChronREnv)
+      assign("bacon.dir",value = bacon.dir,envir = agemodelREnv)
       print(paste0("bacon.dir set to ",bacon.dir))
 }
 
@@ -76,7 +76,7 @@ setBaconDir <- function(bacon.dir){
 #'              cc = 1)
 #' }
 #' @section Long-form example:
-#' \href{http://nickmckay.github.io/GeoChronR/articles/Introduction.html}{View a full-fledged example of how to use this function.}
+#' \href{https://github.com/nickmckay/agemodelR/blob/main/vignettes/Introduction.Rmd}{View a full-fledged example of how to use this function.}
 runBacon <-  function(L,
                       chron.num=NA,
                       meas.table.num = NA,

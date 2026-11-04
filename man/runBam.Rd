@@ -62,7 +62,7 @@ This is a high-level function that uses BAM to simulate age uncertainty in layer
 }
 \section{Long-form example}{
 
-\href{http://nickmckay.github.io/GeoChronR/articles/Introduction.html}{View a full-fledged example of how to use this function.}
+\href{https://github.com/nickmckay/agemodelR/blob/main/vignettes/Introduction.Rmd}{View a full-fledged example of how to use this function.}
 }
 
 \examples{

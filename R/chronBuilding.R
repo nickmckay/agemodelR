@@ -252,7 +252,7 @@ createChronMeasInputDf <- function(L,
   
   
   #store this for later use
-  assign("chron_varUsedStr",value = varUsedStr,envir = geoChronREnv)
+  assign("chron_varUsedStr",value = varUsedStr,envir = agemodelREnv)
   cat(crayon::green(crayon::bold("For future reference: here are the options you chose:\n Find later with getLastVarString()\n")))
   cat(crayon::green(paste0(varUsedStr,"\n")))
   
@@ -356,9 +356,9 @@ createChronMeasInputDf <- function(L,
 #' @family utility
 #' @export
 getLastVarString <- function(){
-  if(exists("chron_varUsedStr",envir = geoChronREnv)){
+  if(exists("chron_varUsedStr",envir = agemodelREnv)){
     
-    return(get("chron_varUsedStr",envir = geoChronREnv))
+    return(get("chron_varUsedStr",envir = agemodelREnv))
   }else{
     return("createChronMeasInputDf() has not yet been successfully run this session")
   }

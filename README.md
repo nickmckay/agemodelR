@@ -1,28 +1,26 @@
-# geoChronR
+# agemodelR
 
-Age-uncertain chronology development and analysis for paleogeoscientific data.
+Age-uncertain chronology development for paleogeoscientific data, with LiPD model
+infrastructure: `runBacon()`, `runBchron()`, `runOxcal()`, `runBam()`, `createModel()`,
+`createChronMeasInputDf()` and `calculateFlux()`.
 
-As of version 2.0, geoChronR is split into three focused packages:
+agemodelR is part of the [geoChronR](https://github.com/nickmckay/GeoChronR) package family:
 
 | Package | Role |
 |---|---|
-| **geoChronR** (this repo) | Age modeling — `runBacon()`, `runBchron()`, `runOxcal()`, `runBam()` — plus LiPD model infrastructure (`createModel()`, `createChronMeasInputDf()`, `calculateFlux()`) |
-| [ens](https://github.com/nickmckay/ens) | Ensemble methods and calculations — `corEns()`, `regressEns()`, `pcaEns()`, `computeSpectraEns()`, binning, `selectData()` |
-| [lipdViz](https://github.com/nickmckay/lipdViz) | Visualization — `plotChronEns()`, `plotTimeseriesEnsRibbons()`, `plotCorEns()`, maps, and more |
-
-**geoChronR imports and re-exports the complete ens and lipdViz APIs**, so
-`library(geoChronR)` still provides the full geoChronR 1.x interface — existing
-scripts and vignettes work unchanged. If you only need ensemble calculations or
-plotting, depend on `ens` or `lipdViz` directly for a much lighter footprint.
+| **agemodelR** (this repo) | Age modeling and LiPD model infrastructure |
+| [ens](https://github.com/nickmckay/ens) | Ensemble methods: `corEns()`, `regressEns()`, `pcaEns()`, `computeSpectraEns()`, binning, `selectData()` |
+| [lipdViz](https://github.com/nickmckay/lipdViz) | Visualization: `plotChronEns()`, `plotTimeseriesEnsRibbons()`, `plotCorEns()`, maps and more |
+| [geoChronR](https://github.com/nickmckay/GeoChronR) | Wrapper: `library(geoChronR)` provides the complete interface of the three packages above |
 
 ## Installation
 
 ```r
-remotes::install_github("nickmckay/geoChronR-chronOnly")
+remotes::install_github("nickmckay/agemodelR")
 ```
 
 ## Getting started
 
-See the [Introduction vignette](vignettes/Introduction.Rmd) for the full
-workflow: load LiPD data, build age models, map age ensembles to paleo
-measurements, and analyze with ensemble methods.
+See the [Introduction vignette](vignettes/Introduction.Rmd) for the full workflow: load LiPD
+data, build age models, map age ensembles to paleo measurements, and analyze with ensemble
+methods.

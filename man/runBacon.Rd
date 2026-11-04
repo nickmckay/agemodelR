@@ -111,16 +111,18 @@ Alternative depths can be provided as, e.g., \code{depths=seq(0, 100, length=500
 Its shape is set by acc.shape (default \code{acc.shape=1.5}; higher values result in more peaked shapes).}
     \item{\code{acc.mean}}{The accumulation rate prior consists of a gamma distribution with two parameters. Its mean is set by acc.mean (default \code{acc.mean=20} yr/cm (or whatever age or depth units are chosen),
 which can be changed to, e.g., 5, 10 or 50 for different kinds of deposits). Multiple values can be given in case of hiatuses or boundaries, e.g., Bacon(hiatus.depths=23, acc.mean=c(5,20))}
-    \item{\code{mem.strength}}{The prior for the memory (dependence of accumulation rate between neighbouring depths) is a beta distribution, which looks much like the gamma distribution.
+    \item{\code{mem.strength}}{The prior for the memory (dependence of accumulation rate between neighbouring depths) is a beta distribution, which looks much like the gamma distribution,
 but its values are always between 0 (no assumed memory) and 1 (100\% memory). Its default settings of \code{mem.strength=10}
 (higher values result in more peaked shapes) allow for a large range of posterior memory values. Please note that the default memory prior has been updated from rbacon version 2.5.1 on, to repair a bug.}
     \item{\code{mem.mean}}{The prior for the memory is a beta distribution, which looks much like the gamma distribution but
 its values are always between 0 (no assumed memory) and 1 (100\% memory). Its default settings of \code{mem.mean=0.5}
 allow for a large range of posterior memory values. Please note that the default memory prior has been updated from rbacon version 2.5.1. on, to repair a bug.}
-    \item{\code{boundary}}{The assumed depths of any boundary, which divides sections of different accumulation rate regimes (e.g., as indicated by major change in the stratigraphy). No hiatus is assumed between these sections, and memory is reset crossing the boundary. Different accumulation priors can be set for the sections above and below the boundary, e.g., \code{acc.mean=c(5, 20)}. See also \code{hiatus.depths}, \code{mem.mean}, \code{acc.mean} and \code{acc.shape}. Setting many boundaries might not work, and having more than one boundary per model section (see \code{'thick'}) might not work either.}
+    \item{\code{boundary}}{The assumed depths of any boundary, which divides sections of different accumulation rate regimes (e.g., as indicated by major change in the stratigraphy). No hiatus is assumed between these sections, and memory is reset crossing the boundary. Different accumulation priors can be set for the sections above and below the boundary, e.g., \code{acc.mean=c(5, 20)}. See also \code{hiatus.depths}, \code{mem.mean}, \code{acc.mean} and \code{acc.shape}. Setting many boundaries might not work, and the maximum numbers of boundaries per model section (see \code{'thick'}) is 1.}
     \item{\code{hiatus.depths}}{The assumed depths for any hiatus should be provided as, e.g.,
-\code{hiatus.depths=20} for one at 20cm depth, and \code{hiatus.depths=c(20,40)} for two hiatuses at 20 and 40 cm depth.}
-    \item{\code{hiatus.max}}{The prior for the maximum length of the hiatus. Hiatus length is a uniform distribution, with equal probabilities between 0 and \code{hiatus.max} yr (or whatever other \code{age.unit} is chosen).}
+\code{hiatus.depths=20} for one at 20 cm depth, and \code{hiatus.depths=c(20,40)} for two hiatuses at 20 and 40 cm depth.}
+    \item{\code{hiatus.mean}}{The prior for the mean of the hiatus gamma prior. Defaults to 1000 and should be >0.}
+    \item{\code{hiatus.shape}}{The prior for the shape of the hiatus gamma prior. Set to 0.5 (default) to favour short time gaps but enable larger ones. Set to 1 for an exponential prior distribution, and to >1 for a distribution that peaks around hiatus.mean. The influence of hiatus.mean on the posterior chronology depends on hiatus.shape. Larger values of hiatus.shape produce a more informative prior and thus constrain posterior hiatus estimates more strongly around hiatus.mean, whereas smaller values allow the dating evidence to dominate.}
+    \item{\code{hiatus.max}}{The hiatus prior used to be a uniform distribution with hiatus.max as its limits. Please use hiatus.mean and hiatus.shape instead. Will be deprecated.}
     \item{\code{add}}{Add a value to the maximum hiatus length if a boundary is chosen. Defaults to 100 yr (or whatever other age unit is chosen). Can be adapted if Bacon complains that the parameters are out of support.}
     \item{\code{after}}{Sets a short section above and below hiatus.depths within which to calculate ages. For internal calculations - do not change.}
     \item{\code{cc1}}{For northern hemisphere terrestrial 14C dates (IntCal20).}
@@ -129,8 +131,9 @@ allow for a large range of posterior memory values. Please note that the default
     \item{\code{cc4}}{Provide the name of an alternative curve (3 columns: cal BP, 14C age, error, separated by white spaces and saved as a plain-text file). It is important here to first produce a tailor-made folder for your and the default calibration curves to live in. See \code{cc.dir}. Defaults to \code{cc4="mixed.14C"}.}
     \item{\code{cc.dir}}{Directory where the calibration curves for C14 dates \code{cc} are located. By default uses the location of the rintcal package which provides the calibration curves. If you want to use custom-made calibration curves, first set up a new folder using the function new.ccdir() in the rintcal package, e.g., \code{new.ccdir="MyCurves"}, then place the custom curve in that folder using \code{rintcal::mix.ccurves(, cc.dir="MyCurves", save=TRUE)}.}
     \item{\code{postbomb}}{Use a postbomb curve for negative (i.e. postbomb) 14C ages. \code{0 = none, 1 = NH1, 2 = NH2, 3 = NH3, 4 = SH1-2, 5 = SH3}}
-    \item{\code{F14C}}{Radiocarbon ages can be provided as F14C values. If doing so, please indicate here which dates were entered as F14C (e.g., if the first 4 dates are in F14C, write \code{F14C=1:4}). The F14C values in your .csv file will then be replaced by their corresponding C14 ages.}
-    \item{\code{pMC}}{Radiocarbon ages can be provided as pMC values. If doing so, please indicate here which dates were entered as pMC (e.g., if the first 4 dates are in pMC, write \code{pMC=1:4}). The pMC values in your .csv file will then be replaced by their corresponding C14 ages.}
+    \item{\code{F14C}}{Radiocarbon ages can be provided as F14C values. If doing so (for example if some of your dates are modern/postbomb), please indicate here which dates were entered as F14C (e.g., if the first 4 dates are in F14C, write \code{F14C=1:4}). The F14C values in your core's .csv file will then be replaced by their corresponding C14 ages.}
+    \item{\code{pMC}}{Radiocarbon ages can be provided as pMC values. If doing so, please indicate here which dates were entered as pMC (e.g., if the first 4 dates are in pMC, write \code{pMC=1:4}). The pMC values in your core's .csv file will then be replaced by their corresponding C14 ages.}
+    \item{\code{hot.stop}}{Stop with a warning if provided F14C or pMC values (see above) are negative or above 3 resp. 300. Defaults to \code{hot.stop=TRUE}.}
     \item{\code{delta.R}}{Mean of core-wide age offsets (e.g., regional marine offsets).}
     \item{\code{delta.STD}}{Error of core-wide age offsets (e.g., regional marine offsets).}
     \item{\code{t.a}}{The dates are treated using the t distribution (Christen and Perez 2009) by default (\code{normal=FALSE}).
@@ -143,7 +146,8 @@ If you want to assign narrower error distributions (more closely resembling the 
 For symmetry reasons, t.a must always be equal to t.b-1.}
     \item{\code{normal}}{By default, Bacon uses the t-distribution to treat the dates. Use \code{normal=TRUE} to use the normal/Gaussian distribution. This will generally give higher weight to the dates.}
     \item{\code{suggest}}{If initial analysis of the data indicates abnormally slow or fast accumulation rates, Bacon will suggest to change the prior.}
-    \item{\code{accept.suggestions}}{Automatically accept the suggested values. Use with care. Default \code{accept.suggestions=FALSE}.
+    \item{\code{accept.suggestions}}{Automatically accept the suggested values. Use with care. Default \code{accept.suggestions=FALSE}.}
+    \item{\code{adjust.dby}}{Automatically adjust d.by to a value smaller than thick. Defaults to \code{adjust.dby=TRUE}.
 Also, if the length of the core would cause too few or too many sections with the default settings, Bacon will suggest an alternative section thickness \code{thick}.
 Accept these suggested alternative settings by typing "y" (or "yes please" if you prefer to be polite), or leave as is by typing "n" (or anything else, really). To get rid of these suggestions, use \code{suggest=FALSE}.}
     \item{\code{reswarn}}{Bacon will warn you if the number of sections lies outside the safe range (default between 10 and 200 sections;
@@ -156,6 +160,7 @@ try running your core again with \code{remember=FALSE}, or, start cleanly by typ
     \item{\code{defaults}}{Name of the file containing settings for the core. For internal use only - do not change.}
     \item{\code{sep}}{Separator between the fields of the plain text file containing the dating information. Default \code{sep=","}.}
     \item{\code{dec}}{Character for decimal points. Default to \code{dec="."}.}
+    \item{\code{fast}}{Whether or not to use the fread function to read files quickly. Set to FALSE if there are problems with your core's .csv file (e.g. unexpected encoding).}
     \item{\code{runname}}{Text to add to the corename for specific runs, e.g., \code{runname="MyCore_Test1"}.}
     \item{\code{slump}}{Upper and lower depths of any sections of assumed abrupt accumulation, that require excising before age-modelling (and adding after age-modelling). Requires pairs of depths, e.g., \code{slump=c(10,15,60,67)} for slumps at 67-60 and 15-10 cm core depth.}
     \item{\code{remove}}{Whether or not to remove depths within slumps. Defaults to \code{remove=FALSE}.}
@@ -169,6 +174,8 @@ try running your core again with \code{remember=FALSE}, or, start cleanly by typ
     \item{\code{MaxAge}}{Deprecated - use oldest.age instead.}
     \item{\code{cutoff}}{Avoid plotting very low probabilities of date distributions (default \code{cutoff=0.001}).}
     \item{\code{plot.pdf}}{Produce a pdf file of the age-depth plot. Defaults to \code{plot.pdf=TRUE} after a Bacon run.}
+    \item{\code{quartz}}{Use quartz-based pdf plots if available (on Mac OS). Defaults to FALSE.}
+    \item{\code{cairo}}{Use cairo-based pdf plots if available (on Mac OS). Defaults to FALSE.}
     \item{\code{dark}}{Darkness of the greyscale age-depth model. The darkest grey value is \code{dark=1} by default.
 Lower values will result in lighter grey but values >1 are not allowed.}
     \item{\code{date.res}}{Date distributions are plotted using \code{date.res=100} segments by default.}
@@ -176,10 +183,11 @@ Lower values will result in lighter grey but values >1 are not allowed.}
     \item{\code{yr.res}}{Deprecated - use age.res instead}
     \item{\code{close.connections}}{Internal option to close connections after a run. Default \code{close.connections=TRUE}.}
     \item{\code{save.info}}{By default, a variable called `info' with relevant information about the run (e.g., core name, priors, settings, ages, output) is saved into the working directory. Note that this will overwrite any existing variable with the same name - as an alternative, one could run, e.g., \code{myvar <- Bacon()}, followed by supplying the variable \code{myvar} in any subsequent commands.}
-    \item{\code{older.than}}{an option to enable dates at the limit of C-14 dating. If there are older.than dates, they tell us that the core should be older than a certain age at that depth. For example, if the 7th and 8th dates in the core's .csv file are older-than dates, use as \code{older.than=c(7,8)}. The MCMC run could be problematic if the older-than ages do not fit with the other information.}
-    \item{\code{younger.than}}{an option to provide younger-than ages, for example a historical pollen marker. If there are younger-than dates, they tell us that the core should be younger than a certain age at that depth. For example, if the 7th and 8th dates in the core's .csv file are younger.than dates, use as \code{younger.than=c(7,8)}. The MCMC run could be problematic if the younger.than ages do not fit with the other information.}
+    \item{\code{older.than}}{an option to enable dates at the limit of C-14 dating. If there are older.than dates, they tell us that the core should be older than a certain age at that depth. For example, if the 7th and 8th dates in the core's .csv file are older-than dates, use as \code{older.than=c(7,8)}. The MCMC run could be problematic if the older-than ages do not fit with the other information. If so, then use the `set.initvals()` function to manually provide initial ballpark values for the age-depth model, at the older end.}
+    \item{\code{younger.than}}{an option to provide younger-than ages, for example a historical pollen marker. If there are younger-than dates, they tell us that the core should be younger than a certain age at that depth. For example, if the 7th and 8th dates in the core's .csv file are younger.than dates, use as \code{younger.than=c(7,8)}. The MCMC run could be problematic if the younger.than ages do not fit with the other information. If so, then use the `set.initvals()` function to manually provide initial ballpark values for the age-depth model, at the younger end.}
     \item{\code{save.elbowages}}{If you want to have a file with the MCMC-derived ages for all the age-depth model's elbows, set \code{save.elbowages=TRUE} and a file with the ages will be saved in the core's folder, starting with the core name, followed by its number of sections, d.min, and section thickness, and ending in "_elbowages.txt".}
     \item{\code{verbose}}{Provide feedback on what is happening (default \code{verbose=TRUE}).}
+    \item{\code{use.cpp}}{Whether or not to use a cpp function to calculate the ages. Defaults to TRUE, but can be set to FALSE (much slower but less experimental)}
   }}
 }
 \value{
@@ -190,7 +198,7 @@ This is a high-level function that uses Bacon to simulate an age model, and stor
 }
 \section{Long-form example}{
 
-\href{http://nickmckay.github.io/GeoChronR/articles/Introduction.html}{View a full-fledged example of how to use this function.}
+\href{https://github.com/nickmckay/agemodelR/blob/main/vignettes/Introduction.Rmd}{View a full-fledged example of how to use this function.}
 }
 
 \examples{
