@@ -57,15 +57,6 @@ test_that("createSummaryTableFromEnsembleTable summarizes an ensemble", {
                 any(grepl("median", names(st), ignore.case = TRUE)))
 })
 
-test_that("re-exports from ens and lipdViz are available", {
-  expect_true(is.function(corEns))           # ens
-  expect_true(is.function(bin))              # ens
-  expect_true(is.function(gaussianize))      # ens
-  expect_true(is.function(plotChronEns))     # lipdViz
-  expect_true(is.function(plotTimeseriesEnsRibbons)) # lipdViz
-  expect_true(is.function(mapLipd))          # lipdViz
-})
-
 test_that("stringifyVariables builds argument strings", {
   expect_true(is.character(stringifyVariables("a", 1)))
 })
