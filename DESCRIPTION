@@ -1,8 +1,8 @@
-Package: geoChronR
+Package: agemodelR
 Type: Package
-Title: Tools to Generate, Analyze and Visualize Time-Uncertain Data
-Version: 2.0.0
-Date: 2026-06-10
+Title: Age Modeling for Paleogeoscientific Data
+Version: 0.1.0
+Date: 2026-11-04
 Authors@R: c(
     person("Nicholas", "McKay" ,email = "nick@nau.edu", role = c("aut", "cre"),
       comment = c(ORCID = "0000-0003-3598-5113")
@@ -17,10 +17,9 @@ Authors@R: c(
 Maintainer: Nick McKay <nick@nau.edu>
 Description: Age-uncertain chronology development for paleogeoscientific
     data, including age modeling with Bacon, Bchron, OxCal, and BAM, and
-    LiPD (Linked Paleo Data) model infrastructure. Ensemble analysis is
-    provided by the 'ens' package and visualization by the 'lipdViz'
-    package; geoChronR imports and re-exports both, so the complete
-    geoChronR 1.x API remains available by loading this package.
+    LiPD (Linked Paleo Data) model infrastructure. Split out of the
+    'geoChronR' package; ensemble analysis is provided by the 'ens' package
+    and visualization by the 'lipdViz' package.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:
@@ -31,7 +30,7 @@ Imports:
     data.table,
     dplyr,
     glue,
-    lipdR,
+    lipdR (>= 0.7.0),
     lubridate,
     magrittr,
     oxcAAR,
@@ -53,11 +52,11 @@ Suggests:
     rmarkdown,
     testthat
 VignetteBuilder: knitr
-URL: https://github.com/nickmckay/geoChronR-chronOnly
-BugReports: https://github.com/nickmckay/geoChronR-chronOnly/issues
+URL: https://github.com/nickmckay/agemodelR
+BugReports: https://github.com/nickmckay/agemodelR/issues
 Remotes:
     nickmckay/ens,
     nickmckay/lipdViz,
     nickmckay/lipdR,
     andrewcparnell/Bchron
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.3

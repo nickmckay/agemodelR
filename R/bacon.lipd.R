@@ -1,5 +1,5 @@
 #create an environment for package variables
-geoChronREnv <- new.env()
+agemodelREnv <- new.env()
 
 #' @export
 #' @author Nick McKay
@@ -13,11 +13,11 @@ geoChronREnv <- new.env()
 getBaconDir <- function(bacon.dir = NA,overwrite.tmp.dir = TRUE){
   #initialize bacon directory
   if(is.na(bacon.dir) | !is.character(bacon.dir)){
-    #check geoChronR env first
-    if(!exists("bacon.dir",where = geoChronREnv)){
+    #check agemodelR env first
+    if(!exists("bacon.dir",where = agemodelREnv)){
       bacon.dir <- file.path(tempdir(),"bacon")
     }else{
-      bacon.dir=get("bacon.dir",envir = geoChronREnv)
+      bacon.dir=get("bacon.dir",envir = agemodelREnv)
       if(is.na(bacon.dir) | !is.character(bacon.dir)){
         bacon.dir <- tempdir()
       }
@@ -44,7 +44,7 @@ getBaconDir <- function(bacon.dir = NA,overwrite.tmp.dir = TRUE){
 #' @family Bacon
 #' @return bacon.dir the bacon core directory
 setBaconDir <- function(bacon.dir){
-      assign("bacon.dir",value = bacon.dir,envir = geoChronREnv)
+      assign("bacon.dir",value = bacon.dir,envir = agemodelREnv)
       print(paste0("bacon.dir set to ",bacon.dir))
 }
 
@@ -76,7 +76,7 @@ setBaconDir <- function(bacon.dir){
 #'              cc = 1)
 #' }
 #' @section Long-form example:
-#' \href{http://nickmckay.github.io/GeoChronR/articles/Introduction.html}{View a full-fledged example of how to use this function.}
+#' \href{https://github.com/nickmckay/agemodelR/blob/main/vignettes/Introduction.Rmd}{View a full-fledged example of how to use this function.}
 runBacon <-  function(L,
                       chron.num=NA,
                       meas.table.num = NA,
@@ -650,12 +650,20 @@ loadBaconOutput <- function(L,
   K=as.numeric(regmatches(st, gregexpr("[0-9]*?(?=\\_ages.txt)", st, perl=TRUE))[[1]])[1]
   summTable = read.table(st,header = TRUE)
   
-  #assign names in.
-  if(packageVersion("rbacon") > "3.5.0"){
-    origNames = c("depth","min.95","max.95","median","mean")
-  }else{
-    origNames = c("depth","min","max","median","mean")
-  }
+  #assign names in. rbacon has renamed these columns across versions, so match on any known name
+  #(<= 3.5.0: depth,min,max; 3.5.x: depth,min.95,max.95; >= 4.0.0: depths,qmin,qmax)
+  nameOptions = list(c("depth","depths"),
+                     c("min.95","min","qmin"),
+                     c("max.95","max","qmax"),
+                     "median",
+                     "mean")
+  origNames = sapply(nameOptions,function(no){
+    found = intersect(no,names(summTable))
+    if(length(found) == 0){
+      stop(glue::glue("Couldn't find a {no[1]} column in {st}. Columns found: {paste(names(summTable),collapse = ', ')}"))
+    }
+    found[1]
+  })
   newNames = c("depth","age.rangeLow","age.rangeHigh","age","age")
   
   depth.units = L$chronData[[chron.num]]$measurementTable[[1]]$depth$units

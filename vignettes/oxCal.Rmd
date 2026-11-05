@@ -1,5 +1,5 @@
 ---
-title: "Intro to OxCal in geoChronR"
+title: "Intro to OxCal in agemodelR"
 author: "Nick McKay"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -20,7 +20,9 @@ knitr::opts_chunk$set(fig.width = 8, fig.height = 6, dev = "ragg_png")
 # Use oxCal to create an age model 
 
 ```{r,message=FALSE,warning=FALSE,results='hide'}
-library(geoChronR)
+library(agemodelR)
+library(ens) #ensemble methods
+library(lipdViz) #plotting
 library(lipdR)
 library(oxcAAR)
 library(dplyr)
@@ -43,7 +45,7 @@ L <- readLipd("https://lipdverse.org/geoChronR-examples/BJ8-03-70GGC.Linsley.201
 ```
 
 
-Now we can run it through oxcal. First, we specify our oxcal path, then use the `runOxcal` function. Like the other `run{AgeModel}` functions in geoChronR, you can leave the parameters empty and specify the choicecs interactively, or you can specify everything for replicability. For choosing the variable names, if you did it interactively and would like to recall those choices, try the `getLastVarString` function.
+Now we can run it through oxcal. First, we specify our oxcal path, then use the `runOxcal` function. Like the other `run{AgeModel}` functions in agemodelR, you can leave the parameters empty and specify the choicecs interactively, or you can specify everything for replicability. For choosing the variable names, if you did it interactively and would like to recall those choices, try the `getLastVarString` function.
 
 Here, in addition to the variable choices, there are a few key parameters to note. First, we specify a "static" reservoir age and uncertainty. You can use this if you want to apply the same deltaR (and uncertainty) to all the ages. Alternatively, these can be columns in the chron measurement tables. 
 

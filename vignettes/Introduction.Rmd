@@ -1,10 +1,10 @@
 ---
-title: "Introduction to geoChronR"
+title: "Introduction to agemodelR"
 author: "Nick McKay"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to geoChronR}
+  %\VignetteIndexEntry{Introduction to agemodelR}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -13,24 +13,20 @@ vignette: >
 knitr::opts_chunk$set(fig.width = 8, fig.height = 6, dev = "ragg_png")
 ```
 
-# Welcome to geoChronR!
+# Welcome to agemodelR!
   
-  This is the introductory vignette that showcases the functionality of geoChronR to solve real problems with age uncertain data. Here is a table of contents of the other guides included here:
-  
-  1. [**Introduction to geoChronR**](Introduction.html)
-  2. [Age-uncertain correlation](correlation.html)
-  3. [Age-uncertain regression and calibration-in-time](regression.html)
-  4. [Age-uncertain spectral analysis](spectral.html)
-  5. [Age-uncertain PCA analysis](pca.html)
+  This is the introductory vignette that showcases the functionality of agemodelR to solve real problems with age uncertain data. Age-uncertain correlation, regression, spectral analysis and PCA are covered in the vignettes of the [ens](https://github.com/nickmckay/ens) package.
   
   
 # Introduction
   
 
-Almost always, your geoChronR work flow will start with loading in a valid LiPD file. So you'll want both the geoChronR and lipdR libraries
+Almost always, your agemodelR work flow will start with loading in a valid LiPD file. So you'll want the agemodelR and lipdR libraries, along with ens and lipdViz for analysis and plotting
   
 ```{r, results = FALSE, warning = FALSE, message= FALSE }
-library(geoChronR)
+library(agemodelR)
+library(ens) #ensemble methods
+library(lipdViz) #plotting
 library(magrittr)
 library(ggplot2)
 ```

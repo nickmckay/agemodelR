@@ -92,7 +92,7 @@ This is a high-level function that uses oxcal to simulate an age model, and stor
 }
 \section{Long-form example}{
 
-\href{http://nickmckay.github.io/GeoChronR/articles/oxCal.html}{View a full-fledged example of how to use this function.}
+\href{https://github.com/nickmckay/agemodelR/blob/main/vignettes/oxCal.Rmd}{View a full-fledged example of how to use this function.}
 }
 
 \examples{

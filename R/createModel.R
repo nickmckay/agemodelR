@@ -406,7 +406,7 @@ createMultiModelEnsemble <- function(L,
   #make some methods.
   
   allMethods <- purrr::map(L$chronData[[chron.num]]$model[models.to.combine],purrr::pluck,"methods")
-  methods <- list(algorithm = "grand model ensemble by geoChronR::createMultiModelEnsemble()", originalMethods = allMethods)
+  methods <- list(algorithm = "grand model ensemble by agemodelR::createMultiModelEnsemble()", originalMethods = allMethods)
   
   L <- createModel(L,
                    depth.or.age.vector = depth.seq,

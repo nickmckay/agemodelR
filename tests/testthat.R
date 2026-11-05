@@ -1,4 +1,5 @@
 library(testthat)
-library(geoChronR)
+library(agemodelR)
+library(ens)
 
-test_check("geoChronR")
+test_check("agemodelR")

@@ -15,24 +15,20 @@ knitr::opts_chunk$set(fig.width = 8, fig.height = 6, dev = "ragg_png")
 knitr::opts_knit$set(progress = FALSE,verbose = FALSE)
 ```
 
-1. [Introduction to geoChronR](Introduction.html)
-2. [Age-uncertain correlation](correlation.html)
-3. [**Age-uncertain regression and calibration-in-time**](regression.html)
-4. [Age-uncertain spectral analysis](spectral.html)
-5. [Age-uncertain PCA analysis](pca.html)
-
 # Ensemble Regression and Calibration-in-time
 
-Here, we replicate the analysis of Boldt et al. (2015), performing age-uncertain calibration-in-time on a chlorophyll reflectance record from northern Alaska, using geoChronR.
+Here, we replicate the analysis of Boldt et al. (2015), performing age-uncertain calibration-in-time on a chlorophyll reflectance record from northern Alaska, using agemodelR and ens.
 
-The challenge of age-uncertain calibration-in-time is that age uncertainty affects both the calibration model (the relation between the proxy data and instrumental data) and the reconstruction (the timing of events in the reconstruction). geoChronR simplifies handling these issues. 
+The challenge of age-uncertain calibration-in-time is that age uncertainty affects both the calibration model (the relation between the proxy data and instrumental data) and the reconstruction (the timing of events in the reconstruction). agemodelR simplifies handling these issues. 
 
 
 Let's start by loading the packages we'll need. 
 
 ```{r, results = FALSE, warning = FALSE, message= FALSE }
 library(lipdR) #to read and write LiPD files
-library(geoChronR) #of course
+library(agemodelR)
+library(ens) #ensemble methods
+library(lipdViz) #plotting
 library(ggplot2) #for plotting
 ``` 
 
@@ -142,7 +138,7 @@ Interesting. It looks a lot like sed rate, as fluxes often do. For now, we'll st
 
 ## Now load in the instrumental data we want to correlate and regress against
 ```{r}
-kurupa.instrumental <- read.csv(system.file("extdata", "KurupaInstrumental.csv", package = "geoChronR"))
+kurupa.instrumental <- read.csv(system.file("extdata", "KurupaInstrumental.csv", package = "agemodelR"))
 ```
 
 ## Check age/time units before proceeding
@@ -203,10 +199,10 @@ regout <- regressEns(time.x = kae,
 regPlots <- plotRegressEns(regout,alp = 0.01,font.size = 8)
 ```
 
-This result is consistent with that produced by Boldt et al., (2015), and was much simpler to produce with geoChronR.
+This result is consistent with that produced by Boldt et al., (2015), and was much simpler to produce with agemodelR and ens.
 
 
-In the next vignette learn about [spectral analysis in geoChronR](spectral_analysis.html). 
+Spectral analysis is covered in the [ens](https://github.com/nickmckay/ens) vignettes. 
 
 
 
