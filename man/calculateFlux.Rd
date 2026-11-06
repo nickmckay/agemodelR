@@ -28,11 +28,11 @@ calculateFlux(
 \arguments{
 \item{L}{A LiPD object}
 
-\item{sed.rate.ens}{sedimentation rate ensemble (potentially from createSedRateEnsemble())}
+\item{sed.rate.ens}{sedimentation rate ensemble (potentially from createSedRateEnsemble()), either as a variable selected with selectData() or as the name of a variable in L. The same goes for the other variable arguments.}
 
 \item{sed.rate.age}{age ensemble that corresponds to sed.rate.ens}
 
-\item{sed.rate.table.num}{table number for sed rate ensemble}
+\item{sed.rate.table.num}{table number for sed rate ensemble (for an ensemble or summary table, the model number). Used only when a variable is given by name; the same goes for the other table arguments.}
 
 \item{sed.rate.table.type}{table type for sed rate ensemble}
 

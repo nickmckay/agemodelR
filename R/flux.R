@@ -2,9 +2,9 @@
 #' Calculate a flux ensemble
 #'
 #' @param L A LiPD object
-#' @param sed.rate.ens sedimentation rate ensemble (potentially from createSedRateEnsemble())
+#' @param sed.rate.ens sedimentation rate ensemble (potentially from createSedRateEnsemble()), either as a variable selected with selectData() or as the name of a variable in L. The same goes for the other variable arguments.
 #' @param sed.rate.age age ensemble that corresponds to sed.rate.ens
-#' @param sed.rate.table.num table number for sed rate ensemble
+#' @param sed.rate.table.num table number for sed rate ensemble (for an ensemble or summary table, the model number). Used only when a variable is given by name; the same goes for the other table arguments.
 #' @param sed.rate.table.type table type for sed rate ensemble
 #' @param density.var name of the density variable
 #' @param density.var.age age variable that corresponds to density
@@ -42,7 +42,17 @@ calculateFlux <- function(L,
                           bin.step = 100,
                           bin.vec = NA){
   
-    #create age binning vector
+  #get each variable, either as given or by selecting it from L
+  srEns <- fluxVariable(L, sed.rate.ens, sed.rate.table.type, sed.rate.table.num)
+  srAgeEns <- fluxVariable(L, sed.rate.age, sed.rate.table.type, sed.rate.table.num)
+  concEns <- fluxVariable(L, concentration.var, concentration.table.type, concentration.table.num)
+  concAgeEns <- fluxVariable(L, concentration.var.age, concentration.table.type, concentration.table.num)
+  if(!all(is.na(density.var))){
+    densEns <- fluxVariable(L, density.var, density.table.type, density.table.num)
+    densAgeEns <- fluxVariable(L, density.var.age, density.table.type, density.table.num)
+  }
+
+  #create age binning vector
   if(all(is.na(bin.vec))){
     vec.min <- min(apply(srAgeEns$values,1,median),apply(concAgeEns$values,1,median))
     vec.max <- max(apply(srAgeEns$values,1,median),apply(concAgeEns$values,1,median))
@@ -75,4 +85,26 @@ calculateFlux <- function(L,
                    methods = list(methods = "agemodelR::calculateFlux"))
   
   return(L)
+}
+
+#' Get a variable for calculateFlux()
+#'
+#' @param L A LiPD object
+#' @param x Either a LiPD variable list (for example from selectData()), or the name of a variable to select from L
+#' @param table.type "measurement", "ensemble" or "summary"
+#' @param table.num For a measurement table, its number; for an ensemble or summary table, the model number
+#' @returns A LiPD variable list
+#' @noRd
+fluxVariable <- function(L, x, table.type, table.num){
+  if(is.list(x) && !is.null(x$values)){
+    return(x)
+  }
+  if(!is.character(x) || length(x) != 1){
+    stop("Expected a variable name or a variable selected with selectData(), but got ", class(x)[1])
+  }
+  if(grepl("^meas", table.type)){
+    selectData(L, var.name = x, table.type = table.type, meas.table.num = table.num)
+  }else{
+    selectData(L, var.name = x, table.type = table.type, model.num = table.num)
+  }
 }
