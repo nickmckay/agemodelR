@@ -633,7 +633,7 @@ runOxcal <-  function(L,
   unlink(file.path(tempdir(),"MCMC_Sample.csv"))
   
   #run the file!
-  oxcal.result.file.path <- executeOxcalAndUpdate(oxMod$modelText,update = update)
+  oxcal.result.file.path <- executeOxcalAndUpdate(oxMod$modelText,update = update,L = L)
   
   
   L <- loadOxcalOutput(L,
@@ -646,9 +646,10 @@ runOxcal <-  function(L,
   return(L)
 }
 
-executeOxcalAndUpdate <- function(oxcal_script,update = TRUE){
-  #see if we can plot
-  if(update){
+executeOxcalAndUpdate <- function(oxcal_script,update = TRUE,L = NULL){
+  #see if we can plot (the progress plot needs the LiPD object)
+  updatePlots <- FALSE
+  if(update && !is.null(L)){
     if("plotly" %in% rownames(installed.packages())){
       updatePlots <- TRUE
     }else{
@@ -662,6 +663,7 @@ executeOxcalAndUpdate <- function(oxcal_script,update = TRUE){
   plotData <- data.frame(depth = modParams$inputData$depth)
   
   
+  if(updatePlots){
   c14Data <- modParams$c14Data
   oxData <- oxcAAR::oxcalCalibrate(c14Data$ages,c14Data$uncertainties)
   
@@ -677,6 +679,7 @@ executeOxcalAndUpdate <- function(oxcal_script,update = TRUE){
     dTable$depth  <- c14Data$depths[dd]
     dTable$depth.units = "cm"
     L$chronData[[1]]$model[[1]]$distributionTable[[dd]] = dTable
+  }
   }
   
   oxcal_path <- oxcAAR:::getOxcalExecutablePath()
@@ -827,7 +830,7 @@ runOxcalModel <- function(L,
   unlink(file.path(tempdir(),"MCMC_Sample.csv"))
   
   #run the file!
-  oxcal.result.file.path <- executeOxcalAndUpdate(model.text)
+  oxcal.result.file.path <- executeOxcalAndUpdate(model.text,L = L)
   
   
   L <- loadOxcalOutput(L,
