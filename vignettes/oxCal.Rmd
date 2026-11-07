@@ -15,6 +15,14 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 knitr::opts_chunk$set(fig.width = 8, fig.height = 6, dev = "ragg_png")
+# OxCal's Linux binary stops partway through MCMC on GitHub's Ubuntu runners
+# without writing posterior samples, so the vignette's code isn't run there.
+run_oxcal <- !(identical(Sys.getenv("CI"), "true") && Sys.info()[["sysname"]] == "Linux")
+knitr::opts_chunk$set(eval = run_oxcal)
+```
+
+```{r, echo = FALSE, eval = !run_oxcal, results = "asis"}
+cat("*This copy of the vignette was built on Linux CI, where OxCal doesn't run, so the code below is shown without its output.*\n")
 ```
 
 # Use oxCal to create an age model 
