@@ -1,5 +1,7 @@
-# agemodelR (development version)
+# agemodelR 0.2.0
 
+* Age model outputs carry time scales right away. `runBacon()`, `runBchron()`, `runOxcal()`, `runOxcalModel()`, `runBam()`, `createModel()`, `createSummaryTableFromEnsembleTable()` and `createMultiModelEnsemble()` give the time columns they create (ensembles, summaries, distributions) the time scale lipdR (>= 0.8.0) adds when reading a file (`timeUnits`, `timeDatum`, `timeDirection`, `timeExponent`, `timeSource`), so results can be plotted, compared and converted without writing and re-reading them. Requires lipdR >= 0.8.1.
+* OxCal ensembles and distributions are labeled "yr BP" (they were "BP").
 * Fixed `calculateFlux()`, which never selected its own variables and only worked when objects called `srEns`, `srAgeEns`, `concEns` and `concAgeEns` happened to exist in the global environment. Each variable argument now takes either the name of a variable in the LiPD object or a variable selected with `selectData()`.
 * Fixed `runOxcal()` and `runOxcalModel()` failing with `object 'L' not found` unless an object called `L` existed in the global environment. The LiPD object is now passed to the progress plot explicitly.
 

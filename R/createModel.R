@@ -170,7 +170,7 @@ createSummaryTableFromEnsembleTable <- function(L,
   
   L[[paleo.or.chron]][[paleo.or.chron.num]]$model[[model.num]]$summaryTable[[1]] <- summaryTable
   
-  return(L)
+  return(addAgeModelTimeScales(L))
 }
 
 
@@ -328,7 +328,7 @@ createModel <- function(L,
     cat("\n")
     print(glue::glue("Also created a summary table in {paleo.or.chron}-{paleo.or.chron.num}, model-{model.num}"))
   }
-  return(L) 
+  return(addAgeModelTimeScales(L)) 
 }
 
 
@@ -424,7 +424,7 @@ createMultiModelEnsemble <- function(L,
   
   
   
-  return(L)
+  return(addAgeModelTimeScales(L))
   
   
   

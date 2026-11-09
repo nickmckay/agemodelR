@@ -194,7 +194,7 @@ runBacon <-  function(L,
                       bacon.dir=bacon.dir,
                       model.num=model.num,
                       max.ens = max.ens)
-  return(L)
+  return(addAgeModelTimeScales(L))
 }
 
 #' @export
@@ -553,7 +553,7 @@ loadBaconOutput <- function(L,
   
   if(!any(grepl(site.name,dir()))){
     print(paste0("can't find a directory called",site.name))
-    return(L)
+    return(addAgeModelTimeScales(L))
   }
   
   
@@ -710,6 +710,6 @@ loadBaconOutput <- function(L,
   }
   
   
-  return(L)
+  return(addAgeModelTimeScales(L))
 }
 

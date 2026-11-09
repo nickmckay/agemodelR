@@ -1,7 +1,7 @@
 Package: agemodelR
 Type: Package
 Title: Age Modeling for Paleogeoscientific Data
-Version: 0.1.0
+Version: 0.2.0
 Date: 2026-11-04
 Authors@R: c(
     person("Nicholas", "McKay" ,email = "nick@nau.edu", role = c("aut", "cre"),
@@ -30,7 +30,7 @@ Imports:
     data.table,
     dplyr,
     glue,
-    lipdR (>= 0.7.0),
+    lipdR (>= 0.8.1),
     lubridate,
     magrittr,
     oxcAAR,

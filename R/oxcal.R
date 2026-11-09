@@ -415,7 +415,7 @@ loadOxcalOutput <- function(L,
   for(dd in 1:length(oxData)){
     dTable = list()
     dTable$age = list(values = convertAD2BP(oxData[[dd]]$raw_probabilities$dates),
-                      units =  "BP", 
+                      units =  "yr BP", 
                       variableName = "age")
     dTable$probabilityDensity = list(values = oxData[[dd]]$raw_probabilities$probabilities , 
                                      variableName = "probabilityDensity")
@@ -475,14 +475,14 @@ loadOxcalOutput <- function(L,
   
   ensembleTable$ageEnsemble$values <-  convertAD2BP(t(as.matrix(oxEns[goodRows,goodColumns])))
   ensembleTable$ageEnsemble$variableName = "ageEnsemble"
-  ensembleTable$ageEnsemble$units <- "BP"
+  ensembleTable$ageEnsemble$units <- "yr BP"
   
   L$chronData[[chron.num]]$model[[model.num]]$ensembleTable[[1]] <-  ensembleTable
   
   
   
   
-  return(L)
+  return(addAgeModelTimeScales(L))
   
 }
 
@@ -643,7 +643,7 @@ runOxcal <-  function(L,
                        max.ens = max.ens,
                        model.num = model.num,
                        make.new = overwrite)
-  return(L)
+  return(addAgeModelTimeScales(L))
 }
 
 executeOxcalAndUpdate <- function(oxcal_script,update = TRUE,L = NULL){
@@ -671,7 +671,7 @@ executeOxcalAndUpdate <- function(oxcal_script,update = TRUE,L = NULL){
   for(dd in 1:length(oxData)){
     dTable = list()
     dTable$age = list(values = 1950 - (oxData[[dd]]$raw_probabilities$dates),
-                      units =  "BP", 
+                      units =  "yr BP", 
                       variableName = "age")
     dTable$probabilityDensity = list(values = oxData[[dd]]$raw_probabilities$probabilities , 
                                      variableName = "probabilityDensity")
@@ -840,6 +840,6 @@ runOxcalModel <- function(L,
                        max.ens = max.ens,
                        model.num = model.num,
                        make.new = overwrite)
-  return(L)
+  return(addAgeModelTimeScales(L))
 }
 
