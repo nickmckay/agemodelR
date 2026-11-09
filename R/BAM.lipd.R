@@ -272,7 +272,7 @@ runBam <- function(L,
   L$paleoData[[paleo.num]]$measurementTable[[paleo.meas.table.num]][[ensName]]$fromModel = model.num
   L$paleoData[[paleo.num]]$measurementTable[[paleo.meas.table.num]][[ensName]]$description = paste("age ensemble pulled from chronData", chron.num,"model",model.num,"- fit to paleoData depth with linear interpolation")
   
-  return(L)
+  return(addAgeModelTimeScales(L))
   
   
 }

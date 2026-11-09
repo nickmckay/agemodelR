@@ -242,7 +242,7 @@ runBchron =  function(L,
   sumTable$meanCalibratedAge$details <- "mean across ensembles"
   L$chronData[[chron.num]]$model[[model.num]]$summaryTable[[1]]=sumTable
   
-  return(L)
+  return(addAgeModelTimeScales(L))
   
 }
 
