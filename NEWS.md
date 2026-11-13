@@ -1,3 +1,7 @@
+# agemodelR 0.2.1
+
+* Requires lipdR 0.8.4 or later, which includes the `pullTsVariable()` fix from 0.8.3 and `filterByInterpretation()`.
+
 # agemodelR 0.2.0
 
 * Age model outputs carry time scales right away. `runBacon()`, `runBchron()`, `runOxcal()`, `runOxcalModel()`, `runBam()`, `createModel()`, `createSummaryTableFromEnsembleTable()` and `createMultiModelEnsemble()` give the time columns they create (ensembles, summaries, distributions) the time scale lipdR (>= 0.8.0) adds when reading a file (`timeUnits`, `timeDatum`, `timeDirection`, `timeExponent`, `timeSource`), so results can be plotted, compared and converted without writing and re-reading them. Requires lipdR >= 0.8.1.
